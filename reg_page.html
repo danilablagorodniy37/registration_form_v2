@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <title>registration page</title>
+
+</head>
+
+<body>
+    <form action="#" id="reg_form">
+        <div class="card">
+
+            <br><img src="./code.png" alt="#" height="30px" width="120px"><br>
+
+            <!-- login -->
+            <div class="mb-3">
+                <label for="exampleInputLogin" class="form-label">login</label>
+                <input type="text" class="form-control login" id="login" name="login" value="blago1" pattern="^[a-z0-9_-]{3,16}$" required>
+                <div class="form-text">3-16 символов: цифры, строчные буквы, символы "-" и "_" .</div>
+            </div>
+            <!-- email -->
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">email</label>
+                <input type="email" class="form-control email" id="email" name="email" value="zabavno-37@mail.ru" required>
+                <div class="form-text">email в нижнем регистре.</div>
+            </div>
+            <!-- password -->
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">password</label>
+                <input type="password" class="form-control password" id="password" name="password" value="DDSDDdsds444$$$" pattern="^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$" required>
+                <div class="form-text">Пароль должен содержать от 6 символов. Минимум одну цифру, спецсимвол, латинские буквы в нижнем и верхнем регистре.</div>
+            </div>
+
+            <!-- submit -->
+            <button type="submit" class="btn btn-primary submit" id="submit" name="submit">Submit</button><br>
+            <button type="button" class="btn btn-info"><a href="./index.html" style="text-decoration:none; color: white;">Authorization</a></button><br>
+
+        </div>
+    </form>
+    <div id="response_form"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#reg_form').on('submit', function(e) {
+                e.preventDefault();
+
+                var login_value = $('input.login').val();
+                var email_value = $('input.email').val();
+                var password_value = $('input.password').val();
+
+                var data = new FormData();
+
+                data.append("login", login_value);
+                data.append("email", email_value);
+                data.append("password", password_value);
+
+                fetch('registration.php', {
+                    method: 'POST',
+                    body: data
+                }).then((response) => {
+                    return response.json();
+                }).then((json) => {
+                    localStorage.setItem("message", json.message);
+                    location.href = "index.html";
+                });
+            })
+        });
+
+    </script>
+</body>
+
+</html>
